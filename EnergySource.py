@@ -4,7 +4,7 @@ class EnergySource(Entity):
     """docstring for EnergySource."""
 
     def __init__(self):
-        super().__init__(pos)
+        super().__init__()
 
 
     def move(self, mapSizeX, mapSizeZ):
@@ -13,4 +13,3 @@ class EnergySource(Entity):
         randZ = random.uniform(-2.45, 2.45)
         newPos = [randX,0.05,randX]
         entityField.setSFVec3f(newPos)
-        pos = newPos
