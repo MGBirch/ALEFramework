@@ -29,10 +29,10 @@ w3.setPosition(270/math.pi)
 w4.setPosition(0/math.pi)
 
 # set velocity of wheels to 0
-w1.setVelocity(0.0)
-w2.setVelocity(0.0)
-w3.setVelocity(0.0)
-w4.setVelocity(0.0)
+w1.setVelocity(3)
+w2.setVelocity(3)
+w3.setVelocity(3.0)
+w4.setVelocity(3.0)
 
 ds = []
 dsNames = [

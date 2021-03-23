@@ -3,8 +3,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.09186562722171791 0.9545580573730359 0.28351300082954994 3.8395351851528026
-  position -1.4508411082035941 0.9685855335938018 -1.5045228979674246
+  orientation -0.038375283986048114 0.9637860305255112 0.2639011651032804 2.9660732251330693
+  position -0.06730098314630406 1.2826590381884633 -1.9302457901878307
   follow "rectangle arena"
 }
 TexturedBackground {
@@ -574,7 +574,7 @@ DEF animal Robot {
         }
       ]
       endPoint Solid {
-        translation 0.07 -0.03 -0.05
+        translation 0.07000000865476984 -0.029995709145914037 -0.049999981720010356
         rotation 1 0 0 0
         children [
           USE leg
