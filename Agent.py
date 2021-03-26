@@ -1,19 +1,23 @@
 import numpy as np
+import math
 import random
 
 from controller import DistanceSensor, Motor, Camera, CameraRecognitionObject, Supervisor
 class Agent(object):
     """docstring for Agent."""
 
-    def __init__(self, mdNames):
+    def __init__(self, mdNames, objName):
         super().__init__()
         self.robot = Supervisor()
+        self.objName = objName
         self.energy = 10000
         self.timestep = int(self.robot.getBasicTimeStep())
         self.camera = self.robot.getDevice('camera')
         self.camera.enable(self.timestep)
         self.camera.recognitionEnable(self.timestep)
+        self.battery = self.robot.getFromDef('battery')
         self.MAX_SPEED = 10
+        self.LOW_SPEED = -10
         self.ds = []
         self.md = []
         self.dsNames = ['ds_left', 'ds_right', 'ds_left(1)', 'ds_right(1)']
@@ -28,20 +32,24 @@ class Agent(object):
 
 
     def multiMoveMotorPos(self, devices, dPos):
-        i = 0
         for device in devices:
             device.setPosition(dPos)
-            i=i+1
 
     def setMultiMotorVel(self, devices, vel):
-        i = 0
         for device in devices:
             device.setVelocity(vel*self.MAX_SPEED)
             self.velocity = vel
-            i=i+1
 
     def getEnergy(self):
         return self.energy
+
+    def checkEnergyCollision(self):
+        carPos = self.getPosition(self.objName)
+        carPos = np.array(carPos)
+        batteryPos = self.battery.getPosition()
+        batteryPos = np.array(batteryPos)
+
+        dist = np.linalg.norm(carPos - batteryPos)
 
         if dist < 0.25:
             bField = self.battery.getField('translation')
@@ -55,56 +63,12 @@ class Agent(object):
             if self.energy > 10000:
                 self.energy = 10000
 
-    def turnLeft(self, value):
-        half = self.length/2
-        count = 0
-        for i in range(self.length):
-            if(count<half):
-                self.md[i].setVelocity((-0.5*value) * self.MAX_SPEED)
-            else:
-                self.md[i].setVelocity((0.5*value) * self.MAX_SPEED)
-            count = count + 1
-
-    def turnRight(self, value):
-        half = self.length/2
-        count = 0
-        for i in range(self.length):
-            if(count<half):
-                self.md[i].setVelocity((0.5*value) * self.MAX_SPEED)
-            else:
-                self.md[i].setVelocity((-0.5*value) * self.MAX_SPEED)
-            count = count + 1
-
     def getPosition(self, name):
         thing = self.robot.getFromDef(name)
         pos = thing.getPosition()
         return pos
 
-    def moveForward(self):
-        for i in range(self.length):
-                self.md[i].setVelocity(0.5 * self.MAX_SPEED)
-
-    def turnSlowLeft(self, value):
-        half = self.length/2
-        count = 0
-        for i in range(self.length):
-            if(count<half):
-                self.md[i].setVelocity((0.1*value) * self.MAX_SPEED)
-            else:
-                self.md[i].setVelocity((0.3*value) * self.MAX_SPEED)
-            count = count + 1
-
-    def turnSlowRight(self, value):
-        half = self.length/2
-        count = 0
-        for i in range(self.length):
-            if(count<half):
-                self.md[i].setVelocity((0.3*value) * self.MAX_SPEED)
-            else:
-                self.md[i].setVelocity((0.1*value) * self.MAX_SPEED)
-            count = count + 1
-
-    def checkObstacle(self, turnValue):
+    def checkObstacle(self):
         dsValues = []
         for i in range(4):
             dsValues.append(self.ds[i].getValue())
@@ -113,15 +77,15 @@ class Agent(object):
         right_obstacle = dsValues[1] < 1000.0 or dsValues[3] < 1000.0
 
         if left_obstacle:
-            self.turnRight(turnValue)
-            return True
+
+            return 1
         elif right_obstacle:
-            self.turnLeft(turnValue)
-            return True
+
+            return 2
         else:
             return False
 
-    def checkRecogniseSource(self, turnValue):
+    def checkRecogniseSource(self):
         currClosest = [1000,100, 1000]
         minDist = float('inf')
         recognisedObj = self.camera.getRecognitionObjects()
@@ -136,25 +100,17 @@ class Agent(object):
         if recognisedObj:
             x = currClosest[0]
             angle = x *minDist
-
-            if angle>0.03:
-                check = self.checkObstacle(turnValue)
-                if check is False:
-                    self.turnSlowRight(turnValue)
-                    return True
-            elif angle<-0.03:
-                check = self.checkObstacle(turnValue)
-                if check is False:
-                    self.turnSlowLeft(turnValue)
-                    return True
-            elif angle <= 0.03 and angle >= -0.03:
-                check = self.checkObstacle(turnValue)
-                if check is False:
-                    self.moveForward()
-                    return True
+            return angle
         else:
-            self.moveForward()
+            return False
+
         return False
 
     def getWheels(self):
         return self.md
+
+    def avoidObstacle(self, value):
+        if value == 1:
+            self.turnRight()
+        elif value == 2:
+            self.turnLeft()
