@@ -1,15 +1,14 @@
-from ALEFramework.Entity import Entity
 import numpy as np
 import random
 
-from controller import DistanceSensor, Motor, Camera, CameraRecognitionObject
-class Agent(Entity):
+from controller import DistanceSensor, Motor, Camera, CameraRecognitionObject, Supervisor
+class Agent(object):
     """docstring for Agent."""
 
     def __init__(self, mdNames):
         super().__init__()
+        self.robot = Supervisor()
         self.energy = 10000
-        self.isAlive = True
         self.timestep = int(self.robot.getBasicTimeStep())
         self.camera = self.robot.getDevice('camera')
         self.camera.enable(self.timestep)
@@ -75,6 +74,11 @@ class Agent(Entity):
             else:
                 self.md[i].setVelocity((-0.5*value) * self.MAX_SPEED)
             count = count + 1
+
+    def getPosition(self, name):
+        thing = self.robot.getFromDef(name)
+        pos = thing.getPosition()
+        return pos
 
     def moveForward(self):
         for i in range(self.length):
