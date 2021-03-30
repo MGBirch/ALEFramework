@@ -14,7 +14,7 @@ class AgentLegged(Agent):
             self.legPos.append(0)
 
     def moveForward(self):
-        print("forward")
+
         for i in range(self.length):
             self.md[i].setVelocity(self.forSpeed * self.MAX_SPEED)
             currPos = self.legPos[i]
@@ -22,7 +22,7 @@ class AgentLegged(Agent):
             self.legPos[i] = currPos + 0.1
 
     def turnLeft(self):
-        print("left")
+
         half = self.length/2
         count = 0
         for i in range(self.length):
@@ -37,7 +37,7 @@ class AgentLegged(Agent):
             count = count + 1
 
     def turnRight(self):
-        print("right")
+
         half = self.length/2
         count = 0
         for i in range(self.length):
@@ -51,7 +51,7 @@ class AgentLegged(Agent):
             count = count + 1
 
     def turnSlowLeft(self):
-        print("slow left")
+
         half = self.length/2
         count = 0
         for count in range(self.length):
@@ -66,7 +66,7 @@ class AgentLegged(Agent):
             count = count + 1
 
     def turnSlowRight(self):
-        print("slow right")
+
         half = self.length/2
         count = 0
         for count in range(self.length):
@@ -79,3 +79,28 @@ class AgentLegged(Agent):
                 self.md[count].setVelocity(0.1*self.turnSpeed * self.MAX_SPEED)
 
             count = count + 1
+
+    def limbForward90(self, limbName):
+        limb = self.robot.getDevice(limbName)
+        limb.setVelocity(self.forSpeed * self.MAX_SPEED)
+        limb.setPosition(0.5 * math.pi)
+
+    def limbBackwards90(self, limbName):
+        limb = self.robot.getDevice(limbName)
+        limb.setVelocity(self.forSpeed * self.MAX_SPEED)
+        limb.setPosition(-0.5 * math.pi)
+
+    def limbForwardRotation(self, limbName):
+        limb = self.robot.getDevice(limbName)
+        limb.setVelocity(self.forSpeed * self.MAX_SPEED)
+        limb.setPosition(2 * math.pi)
+
+    def limbBackwardRotation(self, limbName):
+        limb = self.robot.getDevice(limbName)
+        limb.setVelocity(self.forSpeed * self.MAX_SPEED)
+        limb.setPosition(-2 * math.pi)
+
+    def limbRotation(self, limbName, rotationAmount):
+        limb = self.robot.getDevice(limbName)
+        limb.setVelocity(self.forSpeed * self.MAX_SPEED)
+        limb.setPosition(rotationAmount)
