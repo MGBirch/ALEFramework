@@ -43,21 +43,22 @@ class Agent(object):
     def getEnergy(self):
         return self.energy
 
-    def checkEnergyCollision(self):
-        carPos = self.getPosition(self.objName)
-        carPos = np.array(carPos)
-        batteryPos = self.battery.getPosition()
-        batteryPos = np.array(batteryPos)
+    def checkEnergyCollision(self, preyName):
+        prey = self.robot.getFromDef(preyName)
+        objPos = self.getPosition(self.objName)
+        objPos = np.array(carPos)
+        preyPos = self.prey.getPosition()
+        preyPos = np.array(preyPos)
 
-        dist = np.linalg.norm(carPos - batteryPos)
+        dist = np.linalg.norm(objPos - preyPos)
 
         if dist < 0.25:
-            bField = self.battery.getField('translation')
+            pField = self.battery.getField('translation')
             randX = random.uniform(-2.45, 2.45)
             randZ = random.uniform(-2.45, 2.45)
 
             newPos = [randX,0.05,randX]
-            bField.setSFVec3f(newPos)
+            pField.setSFVec3f(newPos)
 
             self.energy = self.energy + 2000
             if self.energy > 10000:

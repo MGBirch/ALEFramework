@@ -1,10 +1,11 @@
 from ALEFramework.AgentLegged import AgentLegged
 import math
 import numpy as np
-class Predator(AgentLegged):
+class Predator(AgentVehicle, AgentLegged):
     """docstring for AgentVehicle."""
 
-    def __init__(self, mdNames, turnSpeed, forSpeed, objName):
+    def __init__(self, mdNames, turnSpeed, forSpeed, objName, preyName):
+        self.preyName = preyName
         self.mdNames = mdNames
         self.objName = objName
         self.turnSpeed = turnSpeed
@@ -13,7 +14,7 @@ class Predator(AgentLegged):
         self.moveForward()
 
     def predBehaviour(self):
-        self.checkEnergyCollision()
+        self.checkEnergyCollision(self.preyName)
         self.moveForward()
         isObstacle = self.checkObstacle()
         if isObstacle:

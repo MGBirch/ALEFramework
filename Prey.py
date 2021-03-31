@@ -2,7 +2,7 @@ from ALEFramework.AgentVehicle import AgentVehicle
 import math
 import numpy as np
 import time
-class Prey(AgentVehicle):
+class Prey(AgentVehicle, AgentLegged):
     """docstring for AgentVehicle."""
 
     def __init__(self, mdNames, turnSpeed, forSpeed, objName):
