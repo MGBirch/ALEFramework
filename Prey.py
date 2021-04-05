@@ -1,11 +1,13 @@
 from ALEFramework.AgentVehicle import AgentVehicle
+from ALEFramework.AgentLegged import AgentLegged
 import math
 import numpy as np
 import time
-class Prey(AgentVehicle, AgentLegged):
+class Prey(AgentVehicle):
     """docstring for AgentVehicle."""
 
-    def __init__(self, mdNames, turnSpeed, forSpeed, objName):
+    def __init__(self, mdNames, turnSpeed, forSpeed, objName, food):
+        self.food = food
         self.mdNames = mdNames
         self.objName = objName
         self.turnSpeed = turnSpeed
@@ -15,7 +17,7 @@ class Prey(AgentVehicle, AgentLegged):
         self.moveForward()
 
     def preyBehaviour(self):
-
+        self.checkEnergyCollision(self.food)
         isObstacle = self.checkObstacle()
         angle = self.checkRecogniseSource()
         if angle:
@@ -30,20 +32,17 @@ class Prey(AgentVehicle, AgentLegged):
         else:
             self.moveForward()
 
-        self.checkEnergyCollision()
 
     def run(self, angle):
 
         if angle < -1:
             check = self.checkObstacle()
             if check is False:
-                print("right")
                 self.turnRight()
 
         elif angle > 1:
             check = self.checkObstacle()
             if check is False:
-                print("left")
                 self.turnLeft()
 
         elif angle <= 1 and angle >= -1:

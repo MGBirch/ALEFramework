@@ -15,7 +15,6 @@ class Agent(object):
         self.camera = self.robot.getDevice('camera')
         self.camera.enable(self.timestep)
         self.camera.recognitionEnable(self.timestep)
-        self.battery = self.robot.getFromDef('battery')
         self.MAX_SPEED = 10
         self.LOW_SPEED = -10
         self.ds = []
@@ -46,14 +45,14 @@ class Agent(object):
     def checkEnergyCollision(self, preyName):
         prey = self.robot.getFromDef(preyName)
         objPos = self.getPosition(self.objName)
-        objPos = np.array(carPos)
-        preyPos = self.prey.getPosition()
+        objPos = np.array(objPos)
+        preyPos = prey.getPosition()
         preyPos = np.array(preyPos)
 
         dist = np.linalg.norm(objPos - preyPos)
 
         if dist < 0.25:
-            pField = self.battery.getField('translation')
+            pField = prey.getField('translation')
             randX = random.uniform(-2.45, 2.45)
             randZ = random.uniform(-2.45, 2.45)
 
@@ -107,7 +106,7 @@ class Agent(object):
 
         return False
 
-    def getWheels(self):
+    def getMotorDevices(self):
         return self.md
 
     def avoidObstacle(self, value):
