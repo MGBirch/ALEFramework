@@ -1,5 +1,4 @@
 from ALEFramework.AgentVehicle import AgentVehicle
-from ALEFramework.AgentLegged import AgentLegged
 import math
 import numpy as np
 import time

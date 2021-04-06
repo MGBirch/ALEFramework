@@ -1,8 +1,7 @@
-from ALEFramework.AgentLegged import AgentLegged
 from ALEFramework.AgentVehicle import AgentVehicle
 import math
 import numpy as np
-class Predator(AgentVehicle, AgentLegged):
+class Predator(AgentVehicle):
     """docstring for AgentVehicle."""
 
     def __init__(self, mdNames, turnSpeed, forSpeed, objName, preyName):

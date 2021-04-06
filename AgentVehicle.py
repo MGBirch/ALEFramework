@@ -56,6 +56,6 @@ class AgentVehicle(Agent):
                 self.md[i].setVelocity(self.turnSpeed * self.LOW_SPEED)
             count = count + 1
 
-    def wheelSpeed(self, wheelName, velocity):
+    def setWheelSpeed(self, wheelName, velocity):
         limb = self.robot.getDevice(limbName)
         limb.setVelocity(velocity * self.MAX_SPEED)

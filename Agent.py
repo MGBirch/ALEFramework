@@ -42,26 +42,32 @@ class Agent(object):
     def getEnergy(self):
         return self.energy
 
+    def eat(self):
+        pField = prey.getField('translation')
+        randX = random.uniform(-2.45, 2.45)
+        randZ = random.uniform(-2.45, 2.45)
+
+        newPos = [randX,0.05,randX]
+        pField.setSFVec3f(newPos)
+
+        self.energy = self.energy + 2000
+        if self.energy > 10000:
+            self.energy = 10000
+
     def checkEnergyCollision(self, preyNames):
-        prey = self.robot.getFromDef(preyName)
         objPos = self.getPosition(self.objName)
         objPos = np.array(objPos)
-        preyPos = prey.getPosition()
-        preyPos = np.array(preyPos)
+        for preyName in preyNames{
+            prey = self.robot.getFromDef(preyName)
+            preyPos = prey.getPosition()
+            preyPos = np.array(preyPos)
 
-        dist = np.linalg.norm(objPos - preyPos)
+            dist = np.linalg.norm(objPos - preyPos)
 
-        if dist < 0.3:
-            pField = prey.getField('translation')
-            randX = random.uniform(-2.45, 2.45)
-            randZ = random.uniform(-2.45, 2.45)
+            if dist < 0.3:
+                self.eat()
+        }
 
-            newPos = [randX,0.05,randX]
-            pField.setSFVec3f(newPos)
-
-            self.energy = self.energy + 2000
-            if self.energy > 10000:
-                self.energy = 10000
 
     def getPosition(self, name):
         thing = self.robot.getFromDef(name)
