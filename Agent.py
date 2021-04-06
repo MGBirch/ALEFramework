@@ -42,7 +42,7 @@ class Agent(object):
     def getEnergy(self):
         return self.energy
 
-    def checkEnergyCollision(self, preyName):
+    def checkEnergyCollision(self, preyNames):
         prey = self.robot.getFromDef(preyName)
         objPos = self.getPosition(self.objName)
         objPos = np.array(objPos)
