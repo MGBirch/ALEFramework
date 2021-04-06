@@ -27,17 +27,17 @@ class Predator(AgentVehicle):
         self.chase(angle)
 
     def chase(self, angle):
-        if angle < -0.1:
+        if angle < -0.03:
             check = self.checkObstacle()
             if check is False:
                 self.turnSlowLeft()
 
-        elif angle > 0.1:
+        elif angle > 0.03:
             check = self.checkObstacle()
             if check is False:
                 self.turnSlowRight()
 
-        elif angle <= 0.1 and angle >= -0.1:
+        elif angle <= 0.03 and angle >= -0.03:
             check = self.checkObstacle()
             if check is False:
                 self.moveForward()

@@ -51,7 +51,7 @@ class Agent(object):
 
         dist = np.linalg.norm(objPos - preyPos)
 
-        if dist < 0.25:
+        if dist < 0.3:
             pField = prey.getField('translation')
             randX = random.uniform(-2.45, 2.45)
             randZ = random.uniform(-2.45, 2.45)
