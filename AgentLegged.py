@@ -1,7 +1,7 @@
 from ALEFramework.Agent import Agent
 import math
 class AgentLegged(Agent):
-    """docstring for AgentVehicle."""
+    """docstring for AgentLegged."""
 
     def __init__(self, mdNames, forSpeed, objName):
         self.mdNames = mdNames

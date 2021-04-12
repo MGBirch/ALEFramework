@@ -2,8 +2,8 @@ from ALEFramework.AgentLegged import AgentLegged
 import math
 import numpy as np
 import time
-class Prey(Agentlegged):
-    """docstring for AgentVehicle."""
+class LeggedPrey(Agentlegged):
+    """docstring for LeggedPrey."""
 
     def __init__(self, mdNames, turnSpeed, forSpeed, objName, food):
         self.food = food
