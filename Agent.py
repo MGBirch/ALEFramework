@@ -42,6 +42,9 @@ class Agent(object):
     def getEnergy(self):
         return self.energy
 
+    def getEnergy(self, energy):
+        self.energy = energy
+
     def eat(self):
         pField = self.prey.getField('translation')
         randX = random.uniform(-2.45, 2.45)
