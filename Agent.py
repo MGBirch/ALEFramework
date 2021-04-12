@@ -42,7 +42,7 @@ class Agent(object):
     def getEnergy(self):
         return self.energy
 
-    def getEnergy(self, energy):
+    def setEnergy(self, energy):
         self.energy = energy
 
     def eat(self):
