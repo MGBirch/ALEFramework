@@ -45,7 +45,8 @@ class Agent(object):
     def setEnergy(self, energy):
         self.energy = energy
 
-    def eat(self):
+    def eat(self, preyName):
+        self.prey = self.prey = self.robot.getFromDef(preyName)
         pField = self.prey.getField('translation')
         randX = random.uniform(-2.45, 2.45)
         randZ = random.uniform(-2.45, 2.45)
