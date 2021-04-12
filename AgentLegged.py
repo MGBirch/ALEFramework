@@ -20,6 +20,13 @@ class AgentLegged(Agent):
             self.md[i].setPosition(currPos + 0.1)
             self.legPos[i] = currPos + 0.1
 
+    def moveBackward(self):
+
+        for i in range(self.length):
+            currPos = self.legPos[i]
+            self.md[i].setPosition(currPos - 0.1)
+            self.legPos[i] = currPos - 0.1
+
     def turnLeft(self):
 
         half = self.length/2

@@ -16,6 +16,10 @@ class AgentVehicle(Agent):
         for i in range(self.length):
                 self.md[i].setVelocity(self.forSpeed * self.MAX_SPEED)
 
+    def moveBackward(self):
+        for i in range(self.length):
+                self.md[i].setVelocity(self.forSpeed * self.LOW_SPEED)
+
     def turnSlowLeft(self):
         half = self.length/2
         count = 0
