@@ -71,7 +71,9 @@ class Agent(object):
             dist = np.linalg.norm(objPos - preyPos)
 
             if dist < 0.3:
-                self.eat()
+                return True
+
+        return False
 
 
 
