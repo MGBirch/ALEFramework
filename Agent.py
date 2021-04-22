@@ -17,6 +17,8 @@ class Agent(object):
         self.camera.recognitionEnable(self.timestep)
         self.MAX_SPEED = 10
         self.LOW_SPEED = -10
+        self.MAX_ENERGY = 10000
+        self.consumptionEnergy = 2000
         self.ds = []
         self.md = []
         self.dsNames = ['ds_left', 'ds_right', 'ds_left(1)', 'ds_right(1)']
@@ -45,8 +47,8 @@ class Agent(object):
     def setEnergy(self, energy):
         self.energy = energy
 
-    def eat(self, preyName):
-        self.prey = self.prey = self.robot.getFromDef(preyName)
+    def eat(self, prey):
+        self.prey = prey
         pField = self.prey.getField('translation')
         randX = random.uniform(-2.45, 2.45)
         randZ = random.uniform(-2.45, 2.45)
@@ -54,9 +56,9 @@ class Agent(object):
         newPos = [randX,0.05,randX]
         pField.setSFVec3f(newPos)
 
-        self.energy = self.energy + 2000
-        if self.energy > 10000:
-            self.energy = 10000
+        self.energy = self.energy + self.consumptionEnergy
+        if self.energy > self.MAX_ENERGY:
+            self.energy = self.MAX_ENERGY
 
     def checkEnergyCollision(self, preyName):
         objPos = self.getPosition(self.objName)
@@ -71,7 +73,7 @@ class Agent(object):
             dist = np.linalg.norm(objPos - preyPos)
 
             if dist < 0.3:
-                return True
+                return self.prey
 
         return False
 
@@ -128,3 +130,9 @@ class Agent(object):
             self.turnRight()
         elif value == 2:
             self.turnLeft()
+
+    def setMaxEnergy(self, energy):
+        self.MAX_ENERGY = energy
+
+    def setConsumptionEnergy(self, energy):
+        self.consumptionEnergy = energy
