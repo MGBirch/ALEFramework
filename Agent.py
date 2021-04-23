@@ -48,12 +48,12 @@ class Agent(object):
         self.energy = energy
 
     def eat(self, prey):
-        self.prey = prey
-        pField = self.prey.getField('translation')
+        prey = prey
+        pField = prey.getField('translation')
         randX = random.uniform(-2.45, 2.45)
         randZ = random.uniform(-2.45, 2.45)
 
-        newPos = [randX,0.05,randX]
+        newPos = [randX,0.05,randZ]
         pField.setSFVec3f(newPos)
 
         self.energy = self.energy + self.consumptionEnergy
@@ -61,21 +61,22 @@ class Agent(object):
             self.energy = self.MAX_ENERGY
 
     def checkEnergyCollision(self, preyName):
-        objPos = self.getPosition(self.objName)
-        objPos = np.array(objPos)
-        objPos = np.array(objPos)
-        for i in preyName:
-            self.prey = self.robot.getFromDef(i)
-            preyPos = self.prey.getPosition()
-            preyPos = self.prey.getPosition()
-            preyPos = np.array(preyPos)
+        if preyName:
+            objPos = self.getPosition(self.objName)
+            objPos = np.array(objPos)
+            objPos = np.array(objPos)
+            for i in preyName:
+                self.prey = self.robot.getFromDef(i)
+                preyPos = self.prey.getPosition()
+                preyPos = self.prey.getPosition()
+                preyPos = np.array(preyPos)
 
-            dist = np.linalg.norm(objPos - preyPos)
+                dist = np.linalg.norm(objPos - preyPos)
 
-            if dist < 0.3:
-                return self.prey
-
-        return False
+                if dist < 0.4:
+                    return self.prey
+        else:
+            return False
 
 
 

@@ -2,17 +2,16 @@ from ALEFramework.AgentLegged import AgentLegged
 import math
 import numpy as np
 import time
-class LeggedPrey(Agentlegged):
+class LeggedPrey(AgentLegged):
     """docstring for LeggedPrey."""
 
-    def __init__(self, mdNames, turnSpeed, forSpeed, objName, food):
+    def __init__(self, mdNames, forSpeed, objName, food):
         self.food = food
         self.mdNames = mdNames
         self.objName = objName
-        self.turnSpeed = turnSpeed
         self.forSpeed = forSpeed
         self.isRunning = False
-        super().__init__(self.mdNames, self.turnSpeed, self.forSpeed, self.objName)
+        super().__init__(self.mdNames, self.forSpeed, self.objName)
         self.moveForward()
 
     def preyBehaviour(self):

@@ -4,8 +4,7 @@ import numpy as np
 class VehiclePredator(AgentVehicle):
     """docstring for VehiclePredator."""
 
-    def __init__(self, mdNames, turnSpeed, forSpeed, objName, preyName):
-        self.preyName = preyName
+    def __init__(self, mdNames, turnSpeed, forSpeed, objName):
         self.mdNames = mdNames
         self.objName = objName
         self.turnSpeed = turnSpeed
@@ -15,7 +14,6 @@ class VehiclePredator(AgentVehicle):
         self.moveForward()
 
     def predBehaviour(self):
-        self.checkEnergyCollision(self.preyName)
         self.moveForward()
         isObstacle = self.checkObstacle()
         if isObstacle:
@@ -27,20 +25,20 @@ class VehiclePredator(AgentVehicle):
         self.chase(angle)
 
     def chase(self, angle):
-        if angle < -FOCUS_ANGLE:
+        if angle < -self.FOCUS_ANGLE:
             check = self.checkObstacle()
             if check is False:
                 self.turnSlowLeft()
 
-        elif angle > FOCUS_ANGLE:
+        elif angle > self.FOCUS_ANGLE:
             check = self.checkObstacle()
             if check is False:
                 self.turnSlowRight()
 
-        elif angle <= FOCUS_ANGLE and angle >= -FOCUS_ANGLE:
+        elif angle <= self.FOCUS_ANGLE and angle >= -self.FOCUS_ANGLE:
             check = self.checkObstacle()
             if check is False:
                 self.moveForward()
 
     def setFocusAngle(self, angle):
-        FOCUS_ANGLE = angle
+        self.FOCUS_ANGLE = angle
